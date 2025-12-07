@@ -58,7 +58,7 @@ docker-compose up --build
 The application will be available at:
 - **Swagger UI**: `http://localhost:5000/swagger/index.html`
 
-[You can also use the collection located at:](GoodHamburger_API.postman_collection.json)
+[You can also use the collection ](GoodHamburger_API.postman_collection.json)
 ### Application Startup
 
 The application configures services in `Program.cs`:
