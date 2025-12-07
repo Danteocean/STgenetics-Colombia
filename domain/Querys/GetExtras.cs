@@ -32,20 +32,20 @@ public class GetExtras
         }
     }
 
-    public async Task<List<Extras>> GetByIds(List<int> ids)
+    public async Task<List<ExtrasById>> GetByIds(List<int> ids)
     {
         try
         {
-            if (ids == null || ids.Count == 0) return new List<Extras>();
+            if (ids == null || ids.Count == 0) return new List<ExtrasById>();
 
             using var db = new NpgsqlConnection(_conexion);
-            var rows = await db.QueryAsync<Extras>(queryById, new { ids = ids.ToArray() });
+            var rows = await db.QueryAsync<ExtrasById>(queryById, new { ids = ids.ToArray() });
             return rows.ToList();
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error GetExtrasByIds: " + ex.Message);
-            return new List<Extras>();
+            return new List<ExtrasById>();
         }
        
     }

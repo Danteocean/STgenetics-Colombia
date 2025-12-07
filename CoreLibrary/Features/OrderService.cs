@@ -66,6 +66,14 @@ public class OrderService : IOrderService
             var response = new OrderDtoResponse
             {
                 orderId = order.orderId,
+                sandwichId = sandwich.sandwichId,
+                name = sandwich.name,
+                Extras = extrasResponse.Data.Select(e => new CoreLibrary.DTOs.Extras.Response.ExtrasDtoResponse
+                {
+                    extraId = e.extraId,
+                    nameExt = e.nameExt,
+                    priceExt = e.priceExt
+                }).ToList(),   
                 subtotal = subtotal,
                 totalPrice = total
             };
@@ -163,6 +171,14 @@ public class OrderService : IOrderService
             var response = new OrderDtoResponse
             {
                 orderId = order.orderId,
+                sandwichId = sandwich.sandwichId,
+                name = sandwich.name,
+                Extras = extrasResponse.Data.Select(e => new CoreLibrary.DTOs.Extras.Response.ExtrasDtoResponse
+                {
+                    extraId = e.extraId,
+                    nameExt = e.nameExt,
+                    priceExt = e.priceExt
+                }).ToList(),
                 subtotal = newSubtotal,
                 totalPrice = newTotal
             };
@@ -192,32 +208,32 @@ public class OrderService : IOrderService
         return new Response<Sandwich>(sandwich);
     }
 
-    private async Task<Response<List<Extras>>> GetExtrasOrErrorAsync(List<int> extraIds)
+    private async Task<Response<List<ExtrasById>>> GetExtrasOrErrorAsync(List<int> extraIds)
     {
         var getExtras = new GetExtras(ConnectionString);
         var extras = await getExtras.GetByIds(extraIds);
 
         if (extras.Count != extraIds.Count)
         {
-            return new Response<List<Extras>> { Succeeded = false, Message = "Duplicate extras or not found." };
+            return new Response<List<ExtrasById>> { Succeeded = false, Message = "Duplicate extras or not found." };
         }
       
         var distinctCategories = extras.Select(e => e.categoryId).Distinct().Count();
         if (distinctCategories != extras.Count)
         {
-            return new Response<List<Extras>> { Succeeded = false, Message = "Extras of the same category cannot repeat" };
+            return new Response<List<ExtrasById>> { Succeeded = false, Message = "Extras of the same category cannot repeat" };
         }
            
-        return new Response<List<Extras>>(extras);
+        return new Response<List<ExtrasById>>(extras);
     }
 
-    private decimal CalculateSubtotal(decimal sandwichPrice, List<Extras> extras)
+    private decimal CalculateSubtotal(decimal sandwichPrice, List<ExtrasById> extras)
     {
-        return sandwichPrice + extras.Sum(e => e.price);
+        return sandwichPrice + extras.Sum(e => e.priceExt);
     }
 
 
-    private async Task<DiscountRule> GetDiscountPercentAsync(List<Extras> extras)
+    private async Task<DiscountRule> GetDiscountPercentAsync(List<ExtrasById> extras)
     {
         GetDiscount getDiscount = new GetDiscount(ConnectionString);
 
@@ -261,7 +277,7 @@ public class OrderService : IOrderService
         return order;
     }
 
-    private async Task SaveOrderItemsAsync(int orderId, List<Extras> extras)
+    private async Task SaveOrderItemsAsync(int orderId, List<ExtrasById> extras)
     {
         foreach (var extra in extras)
         {

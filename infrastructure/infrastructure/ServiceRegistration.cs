@@ -9,8 +9,8 @@ namespace infrastructure;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection AddDbContexts(this IServiceCollection services
-        , IConfiguration configuration)
+    public static IServiceCollection AddDbContexts(this IServiceCollection services,
+     IConfiguration configuration)
     {
         var conn = configuration.GetConnectionString("DefaultConnection")
                ?? throw new InvalidOperationException("Missing DefaultConnection");
@@ -18,10 +18,11 @@ public static class ServiceRegistration
         Console.WriteLine("AddDbContexts -> ConnectionString: '" + conn + "'");
 
         services.AddDbContext<ServiceContext>(options =>
-        options.UseNpgsql(configuration.GetRequiredSection("ConnectionStrings").Value));
+            options.UseNpgsql(conn));
 
         return services;
     }
+
 
     public static IServiceCollection AddRepository(this IServiceCollection services)
     {

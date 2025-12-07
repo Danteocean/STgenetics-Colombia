@@ -1,1 +1,15 @@
+# .NET
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.cache
+*.userosscache
+*.sln.docstates
+
+# Rider / VS / VSCode
 .vs/
+.idea/
+.vscode/

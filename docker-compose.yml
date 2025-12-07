@@ -1,18 +1,39 @@
 version: "1.0"
 
 services:
+  db:
+    image: postgres:16
+    container_name: goodhamburger_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: goodhamburger
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
+    networks:
+      - goodnet
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: goodhamburger_api
     restart: always
+    depends_on:
+      - db
     ports:
       - "5000:5000"
-
-
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=goodhamburger;Username=postgres;Password=admin123;SSL Mode=Disable"
     networks:
       - goodnet
 
 networks:
   goodnet:
+
+volumes:
+  pgdata:

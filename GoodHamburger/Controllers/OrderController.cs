@@ -49,8 +49,8 @@ public class OrderController : ControllerBase
     [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RemoveOrder(int id)
+    public async Task<IActionResult> RemoveOrder(int orderId)
     {
-        return Ok(await _orderService.RemoveOrder(id));
+        return Ok(await _orderService.RemoveOrder(orderId));
     }
 }
