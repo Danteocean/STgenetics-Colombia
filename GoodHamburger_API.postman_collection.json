@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "bdc83110-8fbb-426e-ae4b-3920be6a1241",
+		"name": "GoodHamburger API",
+		"description": "Postman Collection Description (GoodHamburger API)\n\nGoodHamburger API – Postman Collection\n\nThis Postman collection provides a full set of requests to test the backend API of the GoodHamburger project — a simple ordering system for sandwiches and extras.\n\n🔍 What this collection contains\n\nRequests to retrieve the menu (sandwiches + extras)\n\nRequests to list only sandwiches or extras\n\nEndpoints to create, update, list, and soft-delete orders\n\nExample JSON payloads for creating and updating orders\n\n✅ Purpose & Usage\n\nUse this collection to:\n\nValidate that the API is correctly deployed and connected to the database\n\nTest the core business logic (ordering, extras, discounts, order updates)\n\nVerify database seeding and data consistency after Docker startup\n\nServe as a baseline for functional tests, allowing collaborators to quickly test endpoints without building a frontend\n\n🚀 How to use\n\nImport the collection into Postman (Import → Raw text / or File)\n\nEnsure the backend API is running (local or via Docker), and note the base URL (e.g. [http://localhost:5000](http://localhost:5000))\n\nAdjust environment or base URL in Postman if needed\n\nRun individual requests or create a Postman “Environment” for easier switching between local, docker, or production setups\n\nℹ Notes\n\nThe sample Create Order and Update Order requests use placeholder IDs — you may need to adjust them depending on your seeded data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26614905"
+	},
+	"item": [
+		{
+			"name": "Get Menu (sandwiches + extras)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/Menu/GetMenu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Menu",
+						"GetMenu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sandwiches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/Menu/GetSandwiches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Menu",
+						"GetSandwiches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Extras",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/Menu/GetExtras",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Menu",
+						"GetExtras"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sandwichId\": 3,\n  \"ExtraIds\": [1, 2]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/Order/InsertOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Order",
+						"InsertOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/Order/GetOrders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Order",
+						"GetOrders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"orderId\": 2,\n  \"sandwichId\": 3,\n  \"ExtraIds\": [1]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/Order/UpdateOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Order",
+						"UpdateOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order (soft)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/Order/RemoveOrder?orderId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"Order",
+						"RemoveOrder"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

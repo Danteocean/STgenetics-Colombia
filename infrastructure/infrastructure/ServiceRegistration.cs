@@ -15,7 +15,6 @@ public static class ServiceRegistration
         var conn = configuration.GetConnectionString("DefaultConnection")
                ?? throw new InvalidOperationException("Missing DefaultConnection");
 
-        Console.WriteLine("AddDbContexts -> ConnectionString: '" + conn + "'");
 
         services.AddDbContext<ServiceContext>(options =>
             options.UseNpgsql(conn));

@@ -36,7 +36,7 @@ public class OrderController : ControllerBase
 
   
 
-    [HttpPost("UpdateOrder")]
+    [HttpPut("UpdateOrder")]
     [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status500InternalServerError)]
